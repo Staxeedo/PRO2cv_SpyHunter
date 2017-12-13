@@ -17,12 +17,20 @@ import cz.uhk.pro2.spyhunter.service.CsvGameBoardLoader;
 public class SpyHunterWindow extends JFrame {
 	private GameBoard gb;
 	private BoardPanel p = new BoardPanel();
+	// sekunda nejaky listener
+	private Timer timer = new Timer(10, e -> tick());
+	// nezapomenou timer nastartovat
+
 
 	class BoardPanel extends JPanel {
 		public void paint(Graphics g) {
 			super.paint(g);
 			// g.drawLine(0, 0, 10, 100);
-			gb.draw(g);
+			if(gb.drawAndTestGameOver(g))
+			{
+				//doslo ke smrtelne kolizi
+				timer.stop();
+			}
 		}
 
 	}
@@ -31,7 +39,7 @@ public class SpyHunterWindow extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("SPYHUNTER");
 		
-		
+		timer.start();
 
 		CsvGameBoardLoader loader = new CsvGameBoardLoader();
 		gb = loader.loadGameBoard();
@@ -39,10 +47,7 @@ public class SpyHunterWindow extends JFrame {
 		p.setPreferredSize(new Dimension(300, gb.getPixelHeight()));// preferovany rozmer herni plochy Dimension-> v pixelech
 		add(p, BorderLayout.CENTER);
 		pack();
-		// sekunda nejaky listener
-		Timer t = new Timer(10, e -> tick());
-		// nezapomenou timer nastartovat
-		t.start();
+	
 		addKeyListener(new KeyListener() {
 			
 			@Override

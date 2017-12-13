@@ -39,7 +39,8 @@ public class GameBoard {
 	// kreslime jen viditelnou plochu
 	// %3 ... nejdriv byla vyska 3 bunky
 	// kreslim to obracene 0:0 je dole v rohu
-	public void draw(Graphics g) {
+	public Boolean drawAndTestGameOver(Graphics g) {
+		boolean isGameOver=false;
 		// radky pod obrazovkou se nekresli, %10, 8/10= 0 , 9/10= 0
 		int firstVisibleRow = elapsedY / Tile.SIZE;
 		// (prevod z pixelu na dlazdice)
@@ -62,12 +63,25 @@ public class GameBoard {
 					{
 						//auto koliduje se smrtici dlazdici
 						System.out.println("GameOver");
+						isGameOver=true;
+					}
+				}
+				if(tile instanceof BonusTile)
+				{
+					BonusTile bonusTile=(BonusTile) tile;
+					if(bonusTile.isActive()&&car.collidesWithRect(x,y+elapsedY,Tile.SIZE,Tile.SIZE))
+					{
+						//auto koliduje s bonusovou dlazdici
+						System.out.println("Bonus sezran");
+						bonusTile.setActive(false);
 					}
 				}
 			}
 
 		}
 		car.draw(g);
+	
+		return isGameOver;// nedoslo ke smrtelne kolizi
 
 	}
 

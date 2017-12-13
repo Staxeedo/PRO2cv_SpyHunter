@@ -1,10 +1,15 @@
 package cz.uhk.pro2.spyhunter.service;
 
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 
+import javax.imageio.ImageIO;
+
+import cz.uhk.pro2.spyhunter.model.BonusTile;
 import cz.uhk.pro2.spyhunter.model.GameBoard;
 import cz.uhk.pro2.spyhunter.model.NonRoadTile;
 import cz.uhk.pro2.spyhunter.model.RoadTile;
@@ -18,6 +23,13 @@ public class CsvGameBoardLoader {
 
 			int rows = Integer.valueOf(line[0]);
 			int cols = Integer.valueOf(line[1]);
+			// pocet typu dlazdic, prozatim je musim preskocit
+			int typesCount = Integer.valueOf(line[2]);
+			for(int i=0;i<typesCount;i++)
+			{
+				reader.readLine();
+			}
+			
 			Tile[][] tiles = new Tile[rows][cols];
 			// musime to vzit od spoda nahoru kruvi vykreslovani
 			// do matice ukladame data "vzhuru nohama"
@@ -29,17 +41,22 @@ public class CsvGameBoardLoader {
 					// kdyz tam neni X, tak je silnice
 					if (line.length > j && line[j].equals("X")) {
 						// trava
-						tiles[i][j] = new NonRoadTile();
+						Image img = ImageIO.read(new URL("http://lide.uhk.cz/fim/ucitel/krizpa1/pro2/spyhunter/soil.png"));
+						tiles[i][j] = new NonRoadTile(img);
+						
 					}else if(line[j].equals("B"))
 					{
-						tiles[i][j] = new NonRoadTile(1);
+						//bonus 
+						Image img = ImageIO.read(new URL("http://lide.uhk.cz/fim/ucitel/krizpa1/pro2/spyhunter/mushroom.png"));
+						tiles[i][j] = new BonusTile(img);
 					}
 					
 					
 					
 					else {
-						// silnice
-						tiles[i][j] = new RoadTile();
+						// silnice     // nebo    new  File            
+						Image img = ImageIO.read(new URL("http://lide.uhk.cz/fim/ucitel/krizpa1/pro2/spyhunter/road.png"));
+						tiles[i][j] = new RoadTile(img);
 					}
 				}
 			}

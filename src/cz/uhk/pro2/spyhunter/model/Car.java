@@ -8,8 +8,8 @@ public class Car {
 	// y se nemeni, protoze auto je porad dole
 	private int x;
 	private int y;
-	private static int HEIGHT = 30;
-	private static int WIDTH = 20;
+	private static int HEIGHT = 15;
+	private static int WIDTH = 10;
 
 	public int getX() {
 		return x;

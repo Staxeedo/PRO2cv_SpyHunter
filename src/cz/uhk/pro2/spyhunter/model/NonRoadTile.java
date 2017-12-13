@@ -2,28 +2,17 @@ package cz.uhk.pro2.spyhunter.model;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 
-public class NonRoadTile implements Tile {
-	private int type = 0;
-	public NonRoadTile() {
-	
-	}
-	public NonRoadTile(int type) {
-		this.type=type;
+public class NonRoadTile extends AbstractTile {
+
+	public NonRoadTile(Image image) {
+		super(image);
 	}
 	
-	@Override
-	public void draw(Graphics g, int x, int y) {
-		if(type==1)
-			g.setColor(Color.YELLOW);
-	    else
-		g.setColor(Color.GREEN);
-		
-		
-		
-		g.fillRect(x, y, 10, 10);
-		
-	}
+	
+	
+	
 	@Override
 	public Boolean isLethal() {
 		

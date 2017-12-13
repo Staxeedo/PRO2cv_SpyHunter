@@ -15,7 +15,7 @@ public interface Tile {
 	 * @param x souradnice leveho horniho rohu
 	 * @param y souradnice leveho horniho rohu
 	 */
-	public static final int SIZE=10;
+	public static final int SIZE=16;
 	
 	public void draw(Graphics g, int x, int y);
 	/**
